@@ -1,22 +1,24 @@
 package com.d9cloud.algorithm.array;
 
+import java.util.Arrays;
+
 /**
  * Description:
  *
  * @author: litianyi
  * @date: Created on 2022/01/14
  */
-public class List<T> {
+public class ArrayList<T> {
 
     private int size = 0;
 
     private Object[] container;
 
-    private List() {
+    public ArrayList() {
         container = new Object[10];
     }
 
-    public List(int capacity) {
+    public ArrayList(int capacity) {
         container = new Object[capacity];
     }
 
@@ -36,6 +38,18 @@ public class List<T> {
             throw new RuntimeException("超出范围");
         }
         return (T) container[index];
+    }
+
+    public int size() {
+        return this.size;
+    }
+
+    @Override
+    public String toString() {
+        return "List{" +
+                "size=" + size +
+                ", container=" + Arrays.toString(container) +
+                '}';
     }
 
 }
