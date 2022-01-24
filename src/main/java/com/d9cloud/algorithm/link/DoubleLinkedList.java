@@ -8,7 +8,7 @@ package com.d9cloud.algorithm.link;
  */
 public class DoubleLinkedList {
 
-    private Integer size;
+    private Integer size = 0;
 
     private DoubleNode head;
 
@@ -26,11 +26,13 @@ public class DoubleLinkedList {
         if (head == null) {
             head = node;
             tail = node;
+            size++;
             return true;
         }
         node.prev = tail;
         tail.next = node;
         tail = node;
+        size++;
         return true;
     }
 
@@ -61,22 +63,47 @@ public class DoubleLinkedList {
         if (head == null) {
             return false;
         }
-        if (head.data == data) {
-            head = tail = null;
-            return true;
-        }
-        DoubleNode prev = null;
         DoubleNode cur = head;
         while (cur != null && cur.data != data) {
-            prev = cur;
             cur = cur.next;
         }
-        if (cur == null) {
-            return false;
+        if (cur != null) {
+            if (cur.prev == null && size == 1) {
+                head = cur.next;
+            } else if (cur.prev == null && size > 1) {
+                DoubleNode prev = head;
+                head = cur.next;
+                prev.next = null;
+                head.prev = null;
+            } else if (cur.next != null) {
+                cur.prev.next = cur.next;
+                cur.next.prev = cur.prev;
+                cur.prev = null;
+                cur.next = null;
+            } else {
+                tail = tail.prev;
+                cur.prev.next = cur.next;
+                cur.prev = null;
+            }
+            size--;
+            return true;
         }
-        prev.next = cur.next;
-        cur.next.prev = prev;
-        return true;
+        return false;
+    }
+
+    public static void main(String[] args) {
+        DoubleLinkedList list = new DoubleLinkedList();
+        list.add(11);
+        for (int i = 0; i < 5; i++) {
+            list.add(i);
+        }
+        for (int i = 0; i < 6; i++) {
+            System.out.println("before remove: " + list.get(i));
+        }
+        list.remove(4);
+        for (int i = 0; i < 5; i++) {
+            System.out.println("after remove: " + list.get(i));
+        }
     }
 
 }
