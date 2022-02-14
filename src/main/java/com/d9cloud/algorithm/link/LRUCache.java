@@ -1,6 +1,7 @@
 package com.d9cloud.algorithm.link;
 
-import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Description:
@@ -8,54 +9,75 @@ import java.util.LinkedList;
  * @author 57439
  * @date Created on 2022/1/24
  */
-public class LRUCache<T> {
+public class LRUCache {
 
-    private LinkedList<T> list = new LinkedList<>();
-
-    private int capacity = 10;
-
-    public LRUCache() {
+    class DoubleLinkedNode {
+        public int key;
+        public int value;
+        public DoubleLinkedNode prev;
+        public DoubleLinkedNode next;
+        public DoubleLinkedNode(int key, int value) {
+            this.key = key;
+            this.value = value;
+        }
     }
+
+    private Map<Integer, DoubleLinkedNode> cache = new HashMap<>();
+    private int size;
+    private int capacity;
+    private DoubleLinkedNode head;
+    private DoubleLinkedNode tail;
 
     public LRUCache(int capacity) {
+        this.size = 0;
         this.capacity = capacity;
+        this.head = new DoubleLinkedNode(-1,-1);
+        this.tail = new DoubleLinkedNode(-1,-1);
+        this.head.prev = null;
+        this.head.next = tail;
+        this.tail.prev = head;
+        this.tail.next = null;
     }
 
-    public boolean get(T t) {
-        T temp = null;
-        for (T item : list) {
-            if (item == t) {
-                temp = item;
-            }
-        }
-        if (temp != null) {
-            list.remove(temp);
-            list.addFirst(t);
-        } else {
-            if (list.size() < capacity) {
-                list.addFirst(t);
-            } else {
-                list.removeLast();
-                list.addFirst(t);
-            }
-        }
-        return true;
+    public int get(int key) {
+        DoubleLinkedNode node = cache.get(key);
+        if (node == null) return -1;
+        removeNode(node);
+        addNodeAtHead(node);
+        return node.value;
     }
 
-    public void print() {
-        for (T t : list) {
-            System.out.println(t);
+    public void put(int key, int value) {
+        DoubleLinkedNode node = cache.get(key);
+        if (node != null) {
+            removeNode(node);
+            node.value = value;
+            addNodeAtHead(node);
+            return;
         }
+        if (size == capacity) {
+            cache.remove(tail.prev.key);
+            removeNode(tail.prev);
+            size--;
+        }
+        DoubleLinkedNode newNode = new DoubleLinkedNode(key, value);
+        cache.put(key, newNode);
+        addNodeAtHead(newNode);
+        size++;
     }
 
-    public static void main(String[] args) {
-        LRUCache<Integer> lru = new LRUCache<>();
-        for (int i = 0; i < 10; i++) {
-            lru.get(i);
-        }
-        lru.get(15);
-        lru.get(4);
-        lru.print();
+    private void removeNode(DoubleLinkedNode node) {
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+        node.next = null;
+        node.prev = null;
+    }
+
+    private void addNodeAtHead(DoubleLinkedNode node) {
+        node.next = head.next;
+        head.next.prev = node;
+        head.next = node;
+        node.prev = head;
     }
 
 }
