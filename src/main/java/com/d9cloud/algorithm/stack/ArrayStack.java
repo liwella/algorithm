@@ -20,16 +20,39 @@ public class ArrayStack {
 
     public void add(Integer number) {
         if (size == capacity) {
-
+            this.capacity = capacity + capacity/2;
+            Integer[] temp = new Integer[this.capacity];
+            System.arraycopy(this.array, 0, temp, 0, size);
+            this.array = temp;
         }
+        this.array[size] = number;
+        size++;
     }
 
     public Integer poll() {
-        return null;
+        if (size == 0) {
+            return null;
+        }
+        Integer number = this.array[size - 1];
+        this.array[size - 1] = null;
+        size--;
+        return number;
     }
 
     public Integer peek() {
-        return null;
+        return this.array[size - 1];
+    }
+
+    public static void main(String[] args) {
+        ArrayStack stack = new ArrayStack();
+        for (int i = 0; i < 60; i++) {
+            stack.add(i);
+        }
+        System.out.println(stack.peek());
+        stack.poll();
+        for (int i = 0; i < stack.size; i++) {
+            System.out.print(stack.array[i] + ", ");
+        }
     }
 
 }
