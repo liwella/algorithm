@@ -1,7 +1,5 @@
 package com.d9cloud.algorithm.stack;
 
-import java.util.Stack;
-
 /**
  * Description:
  *
@@ -10,7 +8,7 @@ import java.util.Stack;
  */
 public class BrowserHistory {
 
-    private String currentPage;
+    /*private String currentPage;
     private int backSize;
     private Stack<String> backStack;
     private int forwardSize;
@@ -68,6 +66,34 @@ public class BrowserHistory {
             forwardSize = 0;
         }
         return currentPage;
+    }*/
+
+    int pos = -1;
+    int top = -1;
+    String [] arr ;
+    public BrowserHistory(String homepage) {
+        arr = new String[5001];
+        visit(homepage);
+    }
+
+    public void visit(String url) {
+        pos++;
+        top = pos;
+        arr[top++] = url;
+    }
+
+    public String back(int steps) {
+        if(steps > pos) {
+            steps = pos;
+        }
+        pos -= steps;
+        return arr[pos];
+    }
+
+    public String forward(int steps) {
+        steps = Math.min(steps, top - pos - 1);
+        pos += steps;
+        return arr[pos];
     }
 
 }
