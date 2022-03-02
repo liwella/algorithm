@@ -25,10 +25,10 @@ public class MergeSort {
         int i = start, j = middle + 1, k = 0;
         int[] temp = new int[end - start + 1];
         while (i <= middle && j <= end) {
-            if (params[i] >= params[j]) {
-                temp[k++] = params[j++];
-            } else {
+            if (params[i] <= params[j]) {
                 temp[k++] = params[i++];
+            } else {
+                temp[k++] = params[j++];
             }
         }
         int remainStart = i, remainEnd = middle;
