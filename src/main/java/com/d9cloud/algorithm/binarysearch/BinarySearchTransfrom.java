@@ -67,8 +67,14 @@ public class BinarySearchTransfrom {
         int high = nums.length - 1;
         while (low <= high) {
             int middle = (low + high) / 2;
-            if (target <= nums[middle]) {
-                return -1;
+            if (nums[middle] < target) {
+                low = middle + 1;
+            } else if (nums[middle] >= target) {
+                if (nums[middle - 1] < target) {
+                    return middle;
+                } else {
+                    high = middle - 1;
+                }
             }
         }
         return -1;
@@ -80,6 +86,20 @@ public class BinarySearchTransfrom {
      * @param target
      */
     public int findLastLeTarget(int[] nums, int target) {
+        int low = 0;
+        int high = nums.length - 1;
+        while (low <= high) {
+            int middle = (low + high) / 2;
+            if (nums[middle] > target) {
+                high = middle - 1;
+            } else if (nums[middle] <= target) {
+                if (nums[middle + 1] > target) {
+                    return middle;
+                } else {
+                    low = middle + 1;
+                }
+            }
+        }
         return -1;
     }
 
@@ -93,6 +113,11 @@ public class BinarySearchTransfrom {
         int lastTarget = binarySearch.findLastTarget(nums, 69);
         System.out.println("最后一个等于给定值的下标: " + lastTarget);
 
+        int firstGeTarget = binarySearch.findFirstGeTarget(nums, 69);
+        System.out.println("第一个大于等于给定值的下标：" + firstGeTarget);
+
+        int lastLeTarget = binarySearch.findLastLeTarget(nums, 60);
+        System.out.println("最后一个小于等于给定值的下标：" + lastLeTarget);
     }
 
 }
