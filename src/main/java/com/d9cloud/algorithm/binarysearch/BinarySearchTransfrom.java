@@ -70,7 +70,7 @@ public class BinarySearchTransfrom {
             if (nums[middle] < target) {
                 low = middle + 1;
             } else if (nums[middle] >= target) {
-                if (nums[middle - 1] < target) {
+                if (middle == 0 || nums[middle - 1] < target) {
                     return middle;
                 } else {
                     high = middle - 1;
@@ -93,7 +93,7 @@ public class BinarySearchTransfrom {
             if (nums[middle] > target) {
                 high = middle - 1;
             } else if (nums[middle] <= target) {
-                if (nums[middle + 1] > target) {
+                if (nums[middle + 1] > target || middle == nums.length - 1) {
                     return middle;
                 } else {
                     low = middle + 1;
