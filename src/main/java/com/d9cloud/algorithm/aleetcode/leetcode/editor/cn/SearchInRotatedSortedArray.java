@@ -50,33 +50,36 @@ package com.d9cloud.algorithm.aleetcode.leetcode.editor.cn;
 
 public class SearchInRotatedSortedArray {
 
-//leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public int search(int[] nums, int target) {
-        int low = 0;
-        int high = nums.length - 1;
-        while (low <= high) {
-            int middle = (low + high) / 2;
-            if (nums[middle] == target) {
-                return target;
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        public int search(int[] nums, int target) {
+            if (nums == null || nums.length == 0) {
+                return -1;
             }
-            if (nums[middle] < nums[high]) {
-                if (nums[middle] <= target && nums[high] >= target) {
-                    low = middle + 1;
-                } else {
-                    high = middle - 1;
+            int low = 0;
+            int high = nums.length - 1;
+            while (low <= high) {
+                int middle = (low + high) / 2;
+                if (nums[middle] == target) {
+                    return middle;
                 }
-            } else {
-                if (nums[middle] >= target && nums[low] <= target) {
-                    high = middle - 1;
+                if (nums[middle] >= nums[high]) {
+                    if (nums[low] <= target && nums[middle] > target) {
+                        high = middle - 1;
+                    } else {
+                        low = middle + 1;
+                    }
                 } else {
-                    low = middle + 1;
+                    if (nums[middle] < target && nums[high] >= target) {
+                        low = middle + 1;
+                    } else {
+                        high = middle - 1;
+                    }
                 }
             }
+            return -1;
         }
-        return -1;
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 
