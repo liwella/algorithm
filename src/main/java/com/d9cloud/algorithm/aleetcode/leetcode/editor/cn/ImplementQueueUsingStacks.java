@@ -78,29 +78,32 @@ public class ImplementQueueUsingStacks {
         }
 
         public void push(int x) {
-            while (!stack2.isEmpty()) {
-                stack1.push(stack2.pop());
-            }
             stack1.push(x);
         }
 
         public int pop() {
-            while (!stack1.isEmpty()) {
-                stack2.push(stack1.pop());
-            }
+            moveToStack2();
             return stack2.isEmpty() ? -1 : stack2.pop();
         }
 
         public int peek() {
-            while (!stack1.isEmpty()) {
-                stack2.push(stack1.pop());
-            }
+            moveToStack2();
             return stack2.isEmpty() ? -1 : stack2.peek();
         }
 
         public boolean empty() {
             return stack1.isEmpty() && stack2.isEmpty();
         }
+
+        private void moveToStack2() {
+            if (!stack2.isEmpty()) {
+                return;
+            }
+            while (!stack1.isEmpty()) {
+                stack2.push(stack1.pop());
+            }
+        }
+
     }
 
     /**

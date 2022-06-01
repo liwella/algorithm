@@ -78,31 +78,23 @@ class MyStack {
     
     public int pop() {
         if (empty()) return -1;
-        int i = 0;
-        while (i <= size) {
-            i++;
-            Integer res = queue.poll();
-            if (i == size) {
-                size--;
-                return res;
-            }
-            queue.add(res);
+        int size = this.size;
+        while (size-- > 1) {
+            queue.add(queue.poll());
         }
-        return -1;
+        this.size--;
+        return queue.poll();
     }
     
     public int top() {
         if (empty()) return -1;
-        int i = 0;
-        while (i <= size) {
-            i++;
-            Integer res = queue.poll();
-            queue.add(res);
-            if (i == size) {
-                return res;
-            }
+        int size = this.size;
+        while (size-- > 1) {
+            queue.add(queue.poll());
         }
-        return -1;
+        int result = queue.poll();
+        queue.add(result);
+        return result;
     }
     
     public boolean empty() {

@@ -56,9 +56,7 @@
 
 package com.d9cloud.algorithm.aleetcode.leetcode.editor.cn;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.Stack;
 
 public class ValidParentheses {
 
@@ -80,7 +78,7 @@ class Solution {
         return stack.isEmpty();
     }*/
 
-    private Map<Character,Character> map = new HashMap<Character,Character>(){{
+    /*private Map<Character,Character> map = new HashMap<Character,Character>(){{
         put('{','}'); put('[',']'); put('(',')'); put('?','?');
     }};
     public boolean isValid(String s) {
@@ -91,6 +89,25 @@ class Solution {
             else if(map.get(stack.removeLast()) != c) return false;
         }
         return stack.size() == 1;
+    }*/
+
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        char[] chars = s.toCharArray();
+        for (char c : chars) {
+            if (c == '{') {
+                stack.push('}');
+            } else if (c == '(') {
+                stack.push(')');
+            } else if (c == '[') {
+                stack.push(']');
+            } else if (stack.isEmpty() || stack.peek() != c) {
+                return false;
+            } else {
+                stack.pop();
+            }
+        }
+        return stack.isEmpty();
     }
 
 }
