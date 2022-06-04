@@ -59,6 +59,7 @@ import com.d9cloud.algorithm.aleetcode.leetcode.editor.cn.entity.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class BinaryTreePreorderTraversal {
 
@@ -81,6 +82,8 @@ public class BinaryTreePreorderTraversal {
      */
 
     class Solution {
+
+        /*// 递归实现
         public List<Integer> preorderTraversal(TreeNode root) {
             List<Integer> results = new ArrayList<>();
             if (root == null) {
@@ -98,6 +101,27 @@ public class BinaryTreePreorderTraversal {
             if (node.right != null) {
                 traverse(results, node.right);
             }
+        }*/
+
+        // 迭代实现
+        public List<Integer> preorderTraversal(TreeNode root) {
+            if (root == null) {
+                return new ArrayList<>();
+            }
+            Stack<TreeNode> stack = new Stack<>();
+            List<Integer> result = new ArrayList<>();
+            stack.push(root);
+            while (!stack.isEmpty()) {
+                TreeNode cur = stack.pop();
+                result.add(cur.val);
+                if (cur.right != null) {
+                    stack.push(cur.right);
+                }
+                if (cur.left != null) {
+                    stack.push(cur.left);
+                }
+            }
+            return result;
         }
 
     }

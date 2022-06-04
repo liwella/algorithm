@@ -44,7 +44,9 @@ package com.d9cloud.algorithm.aleetcode.leetcode.editor.cn;
 import com.d9cloud.algorithm.aleetcode.leetcode.editor.cn.entity.TreeNode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 public class BinaryTreePostorderTraversal {
 
@@ -66,6 +68,8 @@ public class BinaryTreePostorderTraversal {
      */
 
     class Solution {
+
+        /*// 递归法
         public List<Integer> postorderTraversal(TreeNode root) {
             List<Integer> results = new ArrayList<>();
             if (root == null) {
@@ -83,6 +87,28 @@ public class BinaryTreePostorderTraversal {
                 traverse(results, node.right);
             }
             results.add(node.val);
+        }*/
+
+        // 迭代法
+        public List<Integer> postorderTraversal(TreeNode root) {
+            List<Integer> result = new ArrayList<>();
+            if (root == null) {
+                return result;
+            }
+            Stack<TreeNode> stack = new Stack<>();
+            stack.push(root);
+            while (!stack.isEmpty()) {
+                TreeNode cur = stack.pop();
+                result.add(cur.val);
+                if (cur.left != null) {
+                    stack.push(cur.left);
+                }
+                if (cur.right != null) {
+                    stack.push(cur.right);
+                }
+            }
+            Collections.reverse(result);
+            return result;
         }
 
     }

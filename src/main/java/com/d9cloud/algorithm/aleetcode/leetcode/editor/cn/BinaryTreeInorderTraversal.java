@@ -45,6 +45,7 @@ import com.d9cloud.algorithm.aleetcode.leetcode.editor.cn.entity.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class BinaryTreeInorderTraversal {
 
@@ -66,6 +67,8 @@ public class BinaryTreeInorderTraversal {
      */
 
     class Solution {
+
+        /*// 递归法
         public List<Integer> inorderTraversal(TreeNode root) {
             List<Integer> results = new ArrayList<>();
             if (root == null) {
@@ -83,6 +86,27 @@ public class BinaryTreeInorderTraversal {
             if (node.right != null) {
                 traverse(results, node.right);
             }
+        }*/
+
+        // 迭代法
+        public List<Integer> inorderTraversal(TreeNode root) {
+            if (root == null) {
+                return new ArrayList<>();
+            }
+            Stack<TreeNode> stack = new Stack<>();
+            List<Integer> result = new ArrayList<>();
+            TreeNode cur = root;
+            while (cur != null || !stack.isEmpty()) {
+                if (cur != null) {
+                    stack.push(cur);
+                    cur = cur.left;
+                } else {
+                    cur = stack.pop();
+                    result.add(cur.val);
+                    cur = cur.right;
+                }
+            }
+            return result;
         }
 
     }
