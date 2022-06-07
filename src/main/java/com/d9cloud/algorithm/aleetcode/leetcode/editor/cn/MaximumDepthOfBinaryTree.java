@@ -42,19 +42,16 @@ public class MaximumDepthOfBinaryTree {
 class Solution {
 
     public int maxDepth(TreeNode root) {
-        int max = 0;
-        int deep = 0;
-        return depthFirst(root, deep, max);
+        return depthFirst(root);
     }
 
-    private int depthFirst(TreeNode node, int deep, int max) {
+    private int depthFirst(TreeNode node) {
         if (node == null) {
-            return Math.max(deep, max);
+            return 0;
         }
-        deep++;
-        max = depthFirst(node.left, deep, max);
-        max = depthFirst(node.right, deep, max);
-        return max;
+        int leftDeep = depthFirst(node.left);
+        int rightDeep = depthFirst(node.right);
+        return 1 + Math.max(leftDeep, rightDeep);
     }
 
 }
