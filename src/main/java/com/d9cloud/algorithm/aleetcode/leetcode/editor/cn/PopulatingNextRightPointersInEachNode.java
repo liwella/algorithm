@@ -56,7 +56,8 @@
 
 package com.d9cloud.algorithm.aleetcode.leetcode.editor.cn;
 
-import com.d9cloud.algorithm.aleetcode.leetcode.editor.cn.entity.Node;
+
+import com.d9cloud.algorithm.aleetcode.leetcode.editor.cn.entity.conflict.Node;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
